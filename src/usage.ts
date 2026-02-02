@@ -78,7 +78,7 @@ function getPlanName(subscriptionType: string | null): string | null {
  * utilization 値をパース（0-100のパーセンテージ）
  */
 function parseUtilization(value: number | undefined): number | null {
-	if (typeof value !== 'number') return null;
+	if (typeof value !== 'number' || !Number.isFinite(value)) return null;
 	if (value < 0 || value > 100) return null;
 	return Math.round(value);
 }

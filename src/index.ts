@@ -34,6 +34,6 @@ const command = {
 
 cli(process.argv.slice(2), command, {
 	name: 'cc-quota',
-	version: '0.1.0',
+	version: '0.1.1',
 	description: 'Fetch Claude Code OAuth usage statistics',
 });

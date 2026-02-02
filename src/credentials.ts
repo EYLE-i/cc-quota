@@ -60,6 +60,11 @@ function parseCredentialsData(jsonStr: string): Credentials | null {
 			return null;
 		}
 
+		// 型チェック
+		if (typeof oauth.accessToken !== 'string') {
+			return null;
+		}
+
 		// 有効期限チェック
 		if (oauth.expiresAt && oauth.expiresAt < Date.now()) {
 			return null;

@@ -84,12 +84,14 @@ import { readCache, writeCache } from 'cc-quota/lib';
 const cached = readCache();
 
 // Clear cache (force fresh API call)
-import { unlinkSync } from 'fs';
+import { unlinkSync, existsSync } from 'fs';
 import { homedir } from 'os';
 import { join } from 'path';
 
 const cachePath = join(homedir(), '.claude', 'cc-statusline', '.usage-cache.json');
-unlinkSync(cachePath);
+if (existsSync(cachePath)) {
+  unlinkSync(cachePath);
+}
 ```
 
 ## Authentication
