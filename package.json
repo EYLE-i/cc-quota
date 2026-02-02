@@ -1,0 +1,51 @@
+{
+  "name": "cc-statusline",
+  "version": "0.0.1",
+  "description": "Claude Code statusline CLI tool",
+  "type": "module",
+  "bin": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "bin": "./dist/index.js",
+    "exports": {
+      ".": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "build": "tsdown",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "prepack": "pnpm run build && clean-pkg-json"
+  },
+  "keywords": [
+    "claude",
+    "claude-code",
+    "statusline",
+    "cli"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "gunshi": "^0.5.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.18.0",
+    "@types/node": "^25.2.0",
+    "clean-pkg-json": "^1.2.0",
+    "eslint": "^9.18.0",
+    "tsdown": "^0.3.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.20.0"
+  },
+  "packageManager": "pnpm@9.15.4",
+  "engines": {
+    "node": ">=18"
+  }
+}
