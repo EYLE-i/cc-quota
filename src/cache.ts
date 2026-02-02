@@ -2,8 +2,9 @@ import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { join, dirname } from 'node:path';
 import type { CacheFile, UsageData } from './types.ts';
+import { logDebug } from './utils.ts';
 
-const CACHE_DIR = join(homedir(), '.claude', 'cc-statusline');
+const CACHE_DIR = join(homedir(), '.claude', 'cc-quota');
 const CACHE_PATH = join(CACHE_DIR, '.usage-cache.json');
 const SUCCESS_TTL_MS = 60 * 1000; // 60秒
 const FAILURE_TTL_MS = 15 * 1000; // 15秒
@@ -20,9 +21,11 @@ export function readCache(): UsageData | null {
 		// TTL判定
 		const ttl = cache.data.apiUnavailable ? FAILURE_TTL_MS : SUCCESS_TTL_MS;
 		if (Date.now() - cache.timestamp > ttl) {
+			logDebug('Cache expired');
 			return null;
 		}
 
+		logDebug('Cache hit');
 		// Date オブジェクトの復元
 		return {
 			...cache.data,
@@ -33,7 +36,8 @@ export function readCache(): UsageData | null {
 				? new Date(cache.data.sevenDayResetAt)
 				: null,
 		};
-	} catch {
+	} catch (error) {
+		logDebug('Failed to read cache', error);
 		return null;
 	}
 }
@@ -52,7 +56,8 @@ export function writeCache(data: UsageData): void {
 		};
 
 		writeFileSync(CACHE_PATH, JSON.stringify(cache, null, 2), 'utf-8');
-	} catch {
-		// キャッシュ書き込み失敗は無視
+		logDebug('Cache written successfully');
+	} catch (error) {
+		logDebug('Failed to write cache', error);
 	}
 }

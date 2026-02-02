@@ -2,6 +2,7 @@ import * as https from 'node:https';
 import type { UsageApiResponse, UsageData } from './types.ts';
 import { readCredentials } from './credentials.ts';
 import { readCache, writeCache } from './cache.ts';
+import { logDebug } from './utils.ts';
 
 // Re-export types for library users
 export type { UsageData, UsageApiResponse } from './types.ts';
@@ -34,24 +35,29 @@ function fetchUsageApi(accessToken: string): Promise<UsageApiResponse | null> {
 
 			res.on('end', () => {
 				if (res.statusCode !== 200) {
+					logDebug(`API request failed with status ${res.statusCode}`);
 					resolve(null);
 					return;
 				}
 
 				try {
 					const parsed = JSON.parse(data) as UsageApiResponse;
+					logDebug('API request successful');
 					resolve(parsed);
-				} catch {
+				} catch (error) {
+					logDebug('Failed to parse API response', error);
 					resolve(null);
 				}
 			});
 		});
 
-		req.on('error', () => {
+		req.on('error', (error) => {
+			logDebug('API request error', error);
 			resolve(null);
 		});
 
 		req.on('timeout', () => {
+			logDebug('API request timeout');
 			req.destroy();
 			resolve(null);
 		});

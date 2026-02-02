@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { join } from 'node:path';
 import type { CredentialsFile } from './types.ts';
+import { logDebug } from './utils.ts';
 
 interface Credentials {
 	accessToken: string;
@@ -57,16 +58,19 @@ function parseCredentialsData(jsonStr: string): Credentials | null {
 		const oauth = data.claudeAiOauth;
 
 		if (!oauth?.accessToken) {
+			logDebug('No accessToken found in credentials');
 			return null;
 		}
 
 		// 型チェック
 		if (typeof oauth.accessToken !== 'string') {
+			logDebug('accessToken is not a string');
 			return null;
 		}
 
 		// 有効期限チェック
 		if (oauth.expiresAt && oauth.expiresAt < Date.now()) {
+			logDebug('Access token expired');
 			return null;
 		}
 
@@ -74,7 +78,8 @@ function parseCredentialsData(jsonStr: string): Credentials | null {
 			accessToken: oauth.accessToken,
 			subscriptionType: oauth.subscriptionType || null,
 		};
-	} catch {
+	} catch (error) {
+		logDebug('Failed to parse credentials', error);
 		return null;
 	}
 }
@@ -88,16 +93,7 @@ export function readCredentials(): Credentials | null {
 	if (keychainData) {
 		const keychainCreds = parseCredentialsData(keychainData);
 		if (keychainCreds) {
-			// subscriptionType がない場合、ファイルから補完を試みる
-			if (!keychainCreds.subscriptionType) {
-				const fileData = readFileCredentials();
-				if (fileData) {
-					const fileCreds = parseCredentialsData(fileData);
-					if (fileCreds?.subscriptionType) {
-						keychainCreds.subscriptionType = fileCreds.subscriptionType;
-					}
-				}
-			}
+			logDebug('Credentials loaded from Keychain');
 			return keychainCreds;
 		}
 	}
@@ -105,8 +101,13 @@ export function readCredentials(): Credentials | null {
 	// ファイルから取得を試みる
 	const fileData = readFileCredentials();
 	if (fileData) {
-		return parseCredentialsData(fileData);
+		const fileCreds = parseCredentialsData(fileData);
+		if (fileCreds) {
+			logDebug('Credentials loaded from file');
+			return fileCreds;
+		}
 	}
 
+	logDebug('No credentials found');
 	return null;
 }

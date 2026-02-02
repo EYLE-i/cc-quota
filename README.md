@@ -88,7 +88,7 @@ import { unlinkSync, existsSync } from 'fs';
 import { homedir } from 'os';
 import { join } from 'path';
 
-const cachePath = join(homedir(), '.claude', 'cc-statusline', '.usage-cache.json');
+const cachePath = join(homedir(), '.claude', 'cc-quota', '.usage-cache.json');
 if (existsSync(cachePath)) {
   unlinkSync(cachePath);
 }
@@ -107,7 +107,23 @@ No additional configuration required if you're logged in to Claude Code.
 
 - **Success TTL**: 60 seconds
 - **Failure TTL**: 15 seconds
-- **Cache location**: `~/.claude/cc-statusline/.usage-cache.json`
+- **Cache location**: `~/.claude/cc-quota/.usage-cache.json`
+
+## Debug Mode
+
+Enable debug logging by setting the `DEBUG` environment variable:
+
+```bash
+DEBUG=cc-quota npx cc-quota
+# or
+DEBUG=* npx cc-quota
+```
+
+This will output detailed logs about:
+- Cache hits/misses and expiration
+- Credential loading (Keychain vs file)
+- API requests and responses
+- Error details for troubleshooting
 
 ## API Endpoint
 
