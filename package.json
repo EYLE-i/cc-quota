@@ -1,6 +1,6 @@
 {
   "name": "cc-quota",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Fetch Claude Code OAuth usage statistics (5-hour and 7-day limits)",
   "type": "module",
   "bin": {
