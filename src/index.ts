@@ -17,8 +17,8 @@ type Values = {
 };
 
 const command = {
-	name: 'cc-statusline',
-	description: 'Claude Code statusline CLI tool',
+	name: 'cc-quota',
+	description: 'Fetch Claude Code OAuth usage statistics',
 	options,
 	usage: {
 		options: {
@@ -33,7 +33,7 @@ const command = {
 } satisfies Command<Options>;
 
 cli(process.argv.slice(2), command, {
-	name: 'cc-statusline',
-	version: '0.0.1',
-	description: 'Claude Code statusline CLI tool',
+	name: 'cc-quota',
+	version: '0.1.0',
+	description: 'Fetch Claude Code OAuth usage statistics',
 });

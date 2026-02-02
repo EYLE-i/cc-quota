@@ -3,6 +3,10 @@ import type { UsageApiResponse, UsageData } from './types.ts';
 import { readCredentials } from './credentials.ts';
 import { readCache, writeCache } from './cache.ts';
 
+// Re-export types for library users
+export type { UsageData, UsageApiResponse } from './types.ts';
+export { readCache, writeCache } from './cache.ts';
+
 /**
  * Usage API を呼び出す
  * @param accessToken アクセストークン
