@@ -1,36 +1,51 @@
 {
-  "name": "cc-statusline",
-  "version": "0.0.1",
-  "description": "Claude Code statusline CLI tool",
+  "name": "cc-quota",
+  "version": "0.1.2",
+  "description": "Fetch Claude Code OAuth usage statistics (5-hour and 7-day limits)",
   "type": "module",
-  "bin": "./src/index.ts",
+  "bin": {
+    "cc-quota": "./dist/index.js"
+  },
   "exports": {
-    ".": "./src/index.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./lib": {
+      "types": "./dist/usage.d.ts",
+      "default": "./dist/usage.js"
+    }
   },
   "files": [
     "dist"
   ],
-  "publishConfig": {
-    "bin": "./dist/index.js",
-    "exports": {
-      ".": "./dist/index.js"
-    }
-  },
   "scripts": {
     "dev": "tsx src/index.ts",
     "build": "tsdown",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "prepack": "pnpm run build && clean-pkg-json"
+    "prepack": "pnpm run build"
   },
   "keywords": [
     "claude",
     "claude-code",
-    "statusline",
-    "cli"
+    "usage",
+    "quota",
+    "oauth",
+    "api",
+    "cli",
+    "limits"
   ],
-  "author": "",
+  "author": "eyle",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eyle-i/cc-quota.git"
+  },
+  "bugs": {
+    "url": "https://github.com/eyle-i/cc-quota/issues"
+  },
+  "homepage": "https://github.com/eyle-i/cc-quota#readme",
   "dependencies": {
     "gunshi": "^0.5.0"
   },

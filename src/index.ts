@@ -17,23 +17,23 @@ type Values = {
 };
 
 const command = {
-	name: 'cc-statusline',
-	description: 'Claude Code statusline CLI tool',
+	name: 'cc-quota',
+	description: 'Fetch Claude Code OAuth usage statistics',
 	options,
 	usage: {
 		options: {
 			format: 'Output format (plain or json)',
 		},
 	},
-	run: (ctx: CommandContext<Options, Values>) => {
+	run: async (ctx: CommandContext<Options, Values>) => {
 		const format = (ctx.values.format || 'plain') as 'plain' | 'json';
-		const output = getStatusline({ format });
+		const output = await getStatusline({ format });
 		console.log(output);
 	},
 } satisfies Command<Options>;
 
 cli(process.argv.slice(2), command, {
-	name: 'cc-statusline',
-	version: '0.0.1',
-	description: 'Claude Code statusline CLI tool',
+	name: 'cc-quota',
+	version: '0.1.2',
+	description: 'Fetch Claude Code OAuth usage statistics',
 });
