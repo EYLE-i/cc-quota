@@ -22,7 +22,7 @@ function fetchUsageApi(accessToken: string): Promise<UsageApiResponse | null> {
 			headers: {
 				Authorization: `Bearer ${accessToken}`,
 				'anthropic-beta': 'oauth-2025-04-20',
-				'User-Agent': 'cc-quota/0.1.2',
+				'User-Agent': 'cc-quota/0.1.3',
 			},
 			timeout: 5000,
 		};
