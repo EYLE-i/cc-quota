@@ -25,9 +25,9 @@ const command = {
 			format: 'Output format (plain or json)',
 		},
 	},
-	run: (ctx: CommandContext<Options, Values>) => {
+	run: async (ctx: CommandContext<Options, Values>) => {
 		const format = (ctx.values.format || 'plain') as 'plain' | 'json';
-		const output = getStatusline({ format });
+		const output = await getStatusline({ format });
 		console.log(output);
 	},
 } satisfies Command<Options>;
