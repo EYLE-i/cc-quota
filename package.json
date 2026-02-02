@@ -3,40 +3,28 @@
   "version": "0.1.0",
   "description": "Fetch Claude Code OAuth usage statistics (5-hour and 7-day limits)",
   "type": "module",
-  "bin": "./src/index.ts",
+  "bin": {
+    "cc-quota": "./dist/index.js"
+  },
   "exports": {
     ".": {
-      "types": "./src/index.ts",
-      "default": "./src/index.ts"
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
     },
     "./lib": {
-      "types": "./src/usage.ts",
-      "default": "./src/usage.ts"
+      "types": "./dist/usage.d.ts",
+      "default": "./dist/usage.js"
     }
   },
   "files": [
-    "dist",
-    "src"
+    "dist"
   ],
-  "publishConfig": {
-    "bin": "./dist/index.js",
-    "exports": {
-      ".": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
-      },
-      "./lib": {
-        "types": "./dist/usage.d.ts",
-        "default": "./dist/usage.js"
-      }
-    }
-  },
   "scripts": {
     "dev": "tsx src/index.ts",
     "build": "tsdown",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "prepack": "pnpm run build && clean-pkg-json"
+    "prepack": "pnpm run build"
   },
   "keywords": [
     "claude",
