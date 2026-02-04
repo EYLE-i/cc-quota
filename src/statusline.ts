@@ -65,7 +65,11 @@ function formatPlain(data: UsageData | null): string {
 	}
 
 	if (data.sevenDay !== null) {
-		parts.push(`7d: ${data.sevenDay}%`);
+		parts.push(`7d-all: ${data.sevenDay}%`);
+	}
+
+	if (data.sevenDaySonnet !== null) {
+		parts.push(`7d-sonnet: ${data.sevenDaySonnet}%`);
 	}
 
 	return parts.length > 0 ? parts.join(' | ') : 'No usage data';

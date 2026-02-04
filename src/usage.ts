@@ -130,8 +130,10 @@ export async function getUsage(): Promise<UsageData | null> {
 			planName,
 			fiveHour: null,
 			sevenDay: null,
+			sevenDaySonnet: null,
 			fiveHourResetAt: null,
 			sevenDayResetAt: null,
+			sevenDaySonnetResetAt: null,
 			apiUnavailable: true,
 		};
 		writeCache(failureData);
@@ -143,8 +145,10 @@ export async function getUsage(): Promise<UsageData | null> {
 		planName,
 		fiveHour: parseUtilization(response.five_hour?.utilization),
 		sevenDay: parseUtilization(response.seven_day?.utilization),
+		sevenDaySonnet: parseUtilization(response.seven_day_sonnet?.utilization),
 		fiveHourResetAt: parseDate(response.five_hour?.resets_at),
 		sevenDayResetAt: parseDate(response.seven_day?.resets_at),
+		sevenDaySonnetResetAt: parseDate(response.seven_day_sonnet?.resets_at),
 	};
 
 	// キャッシュに書き込み
