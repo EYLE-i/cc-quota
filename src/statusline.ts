@@ -14,7 +14,7 @@ export interface StatuslineOptions {
  * @param width バーの文字幅
  * @returns [████░░░░░░] のような形式の文字列
  */
-function formatProgressBar(percentage: number, width: number = 10): string {
+export function formatProgressBar(percentage: number, width: number = 10): string {
 	const filled = Math.round((percentage / 100) * width);
 	const empty = width - filled;
 	const filledBlock = '█'.repeat(filled);
