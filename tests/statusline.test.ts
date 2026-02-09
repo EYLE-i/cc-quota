@@ -87,4 +87,21 @@ describe('formatProgressBar', () => {
 			assert.equal(result, '[████████░░]');
 		});
 	});
+
+	describe('無効な幅の処理', () => {
+		it('負の幅は最小値1にクランプされる', () => {
+			const result = formatProgressBar(50, -5);
+			assert.equal(result, '[█]');
+		});
+
+		it('0の幅は最小値1にクランプされる', () => {
+			const result = formatProgressBar(100, 0);
+			assert.equal(result, '[█]');
+		});
+
+		it('小数点の幅は整数に切り下げられる', () => {
+			const result = formatProgressBar(50, 5.7);
+			assert.equal(result, '[███░░]');
+		});
+	});
 });
